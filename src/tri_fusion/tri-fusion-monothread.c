@@ -12,8 +12,8 @@
 */
 int main (int argc, char *argv[]){
 
-	double * tab = (double *) malloc(N_TABLEAU * sizeof(double)); //Tableau de 1GiB à trier
-	double * tmp = (double *) malloc(N_TABLEAU * sizeof(double)); //tableau temporaire pour le mergesort
+	double * tab = malloc(N_TABLEAU * sizeof(double)); //Tableau de 1GiB à trier
+	double * tmp = malloc(N_TABLEAU * sizeof(double)); //tableau temporaire pour le mergesort
 	double time_0, time_1; // valeur pour le calcul du temps
 	double avg, average; // moyenne 
 	double tpscalcul;
@@ -35,8 +35,15 @@ int main (int argc, char *argv[]){
 		TIME_STOP2(time_1); 
 		tpscalcul = ((double)(time_1-time_0)); //calcul du temps du temps de calcul du tri
 		fprintf(stdout,"Fin du test numéro %d en %lf s\n", k, tpscalcul);
+		FILE* fichier = NULL;
+    fichier = fopen("tri-fusion-mono-compexite.txt", "a+");
+    if (fichier != NULL){
+        fprintf(fichier, "%d\t%lf\n",k,tpscalcul);
+        fclose(fichier);
+    }
 		avg = avg + tpscalcul;
 	}
+	
 	average = avg/nTest;
 	fprintf(stdout,"Valeur moyenne du temps de calcul %lf s\n",average);
 	free(tab); // libération de l'espace mémoire

@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	uint64_t k;
 	int nTest;
 
-	nTest = atoi(argv[1]); // Nbre de test
+	nTest = atoi(argv[1]); // Nbre de test		
 	
 	for(n=N_MAX/100;n<N_MAX;n+=N_MAX/100){ // on fait un incrément de 1/100 qui permet d'augmenter la taille du tableau
 			avg = 0.0;
