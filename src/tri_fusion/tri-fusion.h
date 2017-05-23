@@ -1,0 +1,10 @@
+#include <stdint.h>
+#include <omp.h>
+
+void mergesort_monothread(double t[], uint64_t n, double tmp[]);
+void fusion(double t[], double t2[], uint64_t n, uint64_t n1, double tmp[]);
+
+
+void mergesort_multithread(double t[], uint64_t n, double tmp[], uint64_t compt);
+
+

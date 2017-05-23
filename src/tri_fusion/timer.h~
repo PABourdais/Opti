@@ -1,0 +1,33 @@
+#ifdef _RDTSC_TIMER_H
+#define _RDTSC_TIMER_H
+
+#include <sys/time.h>
+#include <time.h>
+#include <stdio.h>  
+#include <unistd.h>
+
+#ifdef __i386__
+#define RDTSC_CLOBBER "%eax", "%ebx", "%ecx", "%edx"
+#elif __x86_64__
+#define RDTSC_CLOBBER "%rax", "%rbx", "%rcx", "%rdx"
+#else
+# error unknown platform
+#endif
+
+#define TIME_START2(time)                                \
+    do {                                                   \
+			struct timeval start;				\
+			gettimeofday(&start, NULL);			\
+			(time) = (double)start.tv_sec+(double)start.tv_usec/1000000.0; \
+    } while (0)
+
+
+#define TIME_STOP2(time)                                \
+    do {                                                   \
+	struct timeval stop;				\
+	gettimeofday(&stop, NULL);			\
+	(time) = (double)stop.tv_sec+(double)stop.tv_usec/1000000.0; \
+    } while (0)
+
+
+

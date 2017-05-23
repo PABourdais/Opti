@@ -1,0 +1,57 @@
+#include "tri_fusion.h"
+
+
+/** fusion **/
+
+void fusion(double t[], double t1[], uint64_t n, uint64_t n1, double tmp[]){
+	int i1 = 0;
+	int i2 = 0;
+	int k = 0;
+
+	while(i1 != n1 && i2 != n2) {
+		if(t1[i1] < t2[i2]) {
+			tmp[k] = t1[i1];
+			i1++;
+		} else {
+			tmp[k] = t2[i2];
+			i2++;
+		}
+		k++;
+	}
+	if(i1 != n1) {
+		while(i1 != n1) {
+			tmp[k] = t1[i1];
+			k++;
+			i1++; 
+		}
+	} else {
+		while(i2 != n2) {
+			tmp[k] = t2[i2];
+			k++;
+			i2++; 
+		}
+	}
+}
+
+
+
+/** diviser_monothread **/
+/** n taille du tableau **/
+void mergesort_monothread(double t[], uint64_t n, double tmp[]){
+		int i; //itérateur du tableau final
+		if(n<2){
+			return;
+		} else {
+
+			mergesort_monothread(t, n/2, tmp); // Tri de la partie gauche
+			mergesort_monothread(t+(n/2),n-(n/2), tmp); // Tri de la partie droite
+			fusion(t, t+(n/2), n/2, n-(n/2), tmp); // Fusion des deux sous tableaux trié
+			for(i=0; i<n; i++){ // t = tmp on recopie notre tableau
+				t[i] = tmp[i];
+			}
+		}
+}	
+
+
+
+

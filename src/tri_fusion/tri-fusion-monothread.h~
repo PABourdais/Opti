@@ -1,0 +1,2 @@
+void initTab(double * tab);
+
