@@ -1,0 +1,42 @@
+#include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#include "rdtsc-timer.h"
+#include <stdio.h>
+#include "tri-bitonique.h"
+#define N_tableau (int)pow(2,20)*256/(int)sizeof(double)
+
+
+int main(int argc, char *argv[]){
+	double * tab = (double *) malloc(N_tableau*sizeof(double)); // malloc alloue en octet
+	double time_0, time_1;
+	double avg, average;
+	double tpscalcul;
+	int k;
+	int nTest;
+	int j;
+	srand48(time(NULL));
+	nTest = atoi(argv[1]); // Nbre de test
+
+	k = 0;
+	avg = 0.0;
+	while(k<nTest){
+		for(j = 0; j < N_tableau; j++){
+			tab[j] = drand48()*64;
+		}
+		fprintf(stdout,"Init du tableau %d\n",k);
+		TIME_START2(time_0);
+		bitonic_sort(tab, 0, N_tableau, 1);
+		TIME_STOP2(time_1);
+
+		tpscalcul = ((double)(time_1-time_0));
+		fprintf(stdout,"Fin %d en %e\n",k, tpscalcul);
+		avg = avg + tpscalcul;
+		k = k + 1;
+	}
+	average = avg/nTest;
+	fprintf(stdout,"Valeur moyenne du temps de calcul %lf s\n",average);
+	free(tab);
+	return 0;
+}
